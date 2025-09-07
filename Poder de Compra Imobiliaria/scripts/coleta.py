@@ -1,0 +1,1 @@
+# requests para puxar os dados (INPC + imóveis)

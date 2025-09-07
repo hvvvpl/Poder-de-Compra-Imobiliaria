@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f704fb84-bba1-48bc-8f09-c3dece574732</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Poder_de_Compra_Imobiliaria.py</StartupFile>
+    <StartupFile>program.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Poder_de_Compra_Imobiliaria.py" />
+    <Compile Include="program.py" />
+    <Compile Include="scripts\coleta.py" />
+    <Compile Include="scripts\limpeza.py" />
+    <Compile Include="scripts\modelos.py" />
+    <Compile Include="scripts\relatorio.py" />
+    <Compile Include="scripts\visualizacao.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
+    <Folder Include="scripts\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
