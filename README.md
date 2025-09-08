@@ -52,6 +52,7 @@ Saídas principais (em data/):
 Pré?requisitos
 - Python 3.10 ou superior
 - pip
+- instalar requirements.txt no ambiente virtual
 - Acesso à internet (para IBGE e FipeZAP)
 - (Opcional) Visual Studio 2022 com workload de Python
 
