@@ -1,10 +1,11 @@
-# salvar gr·ficos / outputs
+Ôªø# salvar gr√°ficos / outputs
 import pandas as pd
 
 
 
 def gerar_relatorio(df, resultados):
-    # Salvar mÈtricas em CSV
+    # Salvar m√©tricas em CSV
     resultados_df = pd.DataFrame([resultados])
     resultados_df.to_csv("data/resultados.csv", index=False)
-    print(" RelatÛrio gerado em data/resultados.csv")
+    print(" Relat√≥rio gerado em data/resultados.csv")
+

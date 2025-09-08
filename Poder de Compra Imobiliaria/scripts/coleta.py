@@ -1,6 +1,7 @@
-# requests para puxar os dados (INPC + imÛveis)
-# api INPC variaÁ„o salarial: https://apisidra.ibge.gov.br
-# link fixo de download da tabela atualizada de preÁo mÈdio de imÛveis: https://downloads.fipe.org.br/indices/fipezap/fipezap-serieshistoricas.xlsx
+Ôªø# requests para puxar os dados (INPC + im√≥veis)
+# api INPC varia√ß√£o salarial: https://apisidra.ibge.gov.br
+# tabelas da SIDRA IBGE: https://sidra.ibge.gov.br/home/inpc
+# link fixo de download da tabela atualizada de pre√ßo m√©dio de im√≥veis: https://downloads.fipe.org.br/indices/fipezap/fipezap-serieshistoricas.xlsx
 import requests
 import pandas as pd
 from io import BytesIO
@@ -9,21 +10,22 @@ from io import BytesIO
 
 def baixar_dados():
     # --- INPC via API IBGE (SIDRA) ---
-    url_inpc = "https://api.sidra.ibge.gov.br/values/t/7060/n1/all/v/44/p/all/d/v44%202"  # INPC mensal
-    resp_inpc = requests.get(url_inpc)
-    df_inpc = pd.DataFrame(resp_inpc.json())
+    urlInpc = "https://apisidra.ibge.gov.br/values/t/7063/n1/1/p/last48/v/44/h/y/f/n/d/2"  # INPC mensal
+    respostaInpc = requests.get(urlInpc)
+    dfInpc = pd.DataFrame(respostaInpc.json())
     print(" INPC carregado da API IBGE.")
 
-    # --- PreÁo mÈdio de imÛveis via FipeZAP (Excel) ---
-    url_fipe = "https://downloads.fipe.org.br/indices/fipezap/fipezap-serieshistoricas.xlsx"
-    resp_fipe = requests.get(url_fipe)
-    df_imoveis = pd.read_excel(BytesIO(resp_fipe.content), sheet_name="Venda - Brasil")
-    print(" PreÁos de imÛveis carregados do FipeZAP.")
+    # --- Pre√ßo m√©dio de im√≥veis via FipeZAP (Excel) ---
+    urlFipe = "https://downloads.fipe.org.br/indices/fipezap/fipezap-serieshistoricas.xlsx"
+    respostaFipe = requests.get(urlFipe)
+    dfPrecoImoveis = pd.read_excel(BytesIO(respostaFipe.content), sheet_name="√çndice FipeZAP")
+    print(" Pre√ßos de im√≥veis carregados do FipeZAP.")
 
     # Salvar arquivos crus na pasta data
-    df_inpc.to_csv("data/inpc_raw.csv", index=False)
-    df_imoveis.to_csv("data/imoveis_raw.csv", index=False)
+    dfInpc.to_csv("data/inpc_raw.csv", index=False)
+    dfPrecoImoveis.to_csv("data/imoveis_raw.csv", index=False)
 
-    return df_inpc, df_imoveis
+    return dfInpc, dfPrecoImoveis
+
 
 

@@ -1,50 +1,55 @@
-# Poder de Compra Imobiliária – Pipeline de Dados com ML e Visualização
-Projeto prático – Python 3.10+ – Console
+# Poder de Compra Imobiliária — Pipeline de Dados com ML e Visualização
+Projeto prático • Python 3.10+ • Console
 
 ## Visão Geral
 Aplicação de console que orquestra um pipeline completo para analisar o poder de compra no mercado imobiliário brasileiro. Coleta séries do INPC (IBGE/SIDRA) e de preços de imóveis (FipeZAP), faz limpeza e junção, gera visualizações exploratórias, treina um modelo simples de ML (regressão linear) e exporta um relatório com métricas.
 
-![INPC](data/grafico_inpc.png)
-![Preços de Imóveis](data/grafico_imoveis.png)
-![INPC vs Preços](data/grafico_relacao.png)
+Saídas principais (em data/):
+- Gráficos: grafico_inpc.png, grafico_imoveis.png, grafico_relacao.png
+- Métricas de ML: resultados.csv
+- Dados brutos: inpc_raw.csv, imoveis_raw.csv
 
-## Funcionalidades
-- Coleta de dados
-  - INPC mensal via API IBGE/SIDRA.
-  - Série histórica de preços de imóveis (Brasil) via FipeZAP (Excel).
-  - Persistência dos brutos em CSV: data/inpc_raw.csv e data/imoveis_raw.csv.
+## Fontes de Dados
+- INPC (mensal) via API IBGE/SIDRA (últimos 48 meses)
+  - https://apisidra.ibge.gov.br
+- FipeZAP (séries históricas em Excel)
+  - https://downloads.fipe.org.br/indices/fipezap/fipezap-serieshistoricas.xlsx
+  - Aba utilizada: “Índice FipeZAP”
 
-- Limpeza e pré-processamento
-  - Padronização de colunas e coerção numérica.
-  - Seleção de colunas relevantes.
-  - Junção interna por mês (“mes”) para alinhar INPC e preços.
-
-- Visualização exploratória
-  - Evolução do INPC (linha).
-  - Evolução do preço médio de imóveis (linha).
-  - Relação INPC x preço médio (dispersão).
-  - PNGs salvos em data/grafico_*.png.
-
-- Machine Learning
-  - Regressão linear para prever preço a partir do INPC.
-  - Train/test split e métricas (RMSE, R²).
-
-- Relatórios
-  - Salva métricas do modelo em data/resultados.csv.
+## Pipeline (scripts/)
+1) coleta.py
+   - Baixa:
+     - INPC (API SIDRA): últimos 48 meses, salva em data/inpc_raw.csv
+     - FipeZAP (Excel): aba “Índice FipeZAP”, salva em data/imoveis_raw.csv
+   - Dependências: requests, pandas, openpyxl
+2) limpeza.py
+   - INPC: renomeia colunas D2N?mes e V?inpc; converte “inpc” para numérico.
+   - Imóveis: seleciona colunas B e R da aba “Índice FipeZAP” e as renomeia para [mes, preco_medio].
+   - Faz merge interno (inner) por “mes”.
+   - Observação: se a coluna de mês na planilha estiver na coluna A, troque para A e R (ou ajuste no coleta/limpeza conforme necessário).
+3) visualizacao.py
+   - Gera gráficos: evolução do INPC, evolução do preço médio (R$/m²) e relação INPC x preço.
+   - Salva em data/grafico_*.png.
+4) modelos.py
+   - Regressão linear simples (y=preco_medio, X=inpc) com train/test split.
+   - Salva RMSE e R² em resultados.
+5) relatorio.py
+   - Exporta métricas para data/resultados.csv.
 
 ## Estrutura do projeto
 - Poder de Compra Imobiliaria (aplicação console)
   - Program.py (orquestra: coletar ? limpar ? visualizar ? modelar ? relatar)
   - scripts/
-    - coleta.py (baixar_dados: INPC via SIDRA + FipeZAP; salva CSVs brutos)
-    - limpeza.py (preprocessar: limpeza e merge por “mes”)
-    - visualizacao.py (plotar_graficos: linhas e dispersão em PNG)
-    - modelos.py (treinar_modelos: LinearRegression, RMSE e R²)
-    - relatorio.py (gerar_relatorio: exporta métricas em CSV)
+    - coleta.py
+    - limpeza.py
+    - visualizacao.py
+    - modelos.py
+    - relatorio.py
   - data/ (gerada em runtime: CSVs brutos, gráficos e resultados.csv)
 
 ## Como executar
-Pré-requisitos
+
+Pré?requisitos
 - Python 3.10 ou superior
 - pip
 - Acesso à internet (para IBGE e FipeZAP)
@@ -54,11 +59,13 @@ Instalação
 - Windows (PowerShell)
   - python -m venv .venv
   - .\.venv\Scripts\Activate
-  - pip install requests pandas seaborn matplotlib scikit-learn openpyxl
+  - pip install -r "Poder de Compra Imobiliaria/requirements.txt"
+  - (ou) pip install requests pandas seaborn matplotlib scikit-learn openpyxl
 - macOS/Linux
   - python3 -m venv .venv
   - source .venv/bin/activate
-  - pip install requests pandas seaborn matplotlib scikit-learn openpyxl
+  - pip install -r "Poder de Compra Imobiliaria/requirements.txt"
+  - (ou) pip install requests pandas seaborn matplotlib scikit-learn openpyxl
 
 Visual Studio 2022
 1. Abra a pasta “Poder de Compra Imobiliaria”.
@@ -70,13 +77,15 @@ CLI
 - Na raiz do repositório (após instalar as dependências):
   - python "Poder de Compra Imobiliaria/Program.py"
 
-## Observações de uso
+## Observações importantes
 - Certifique-se de que a pasta “data/” exista antes de executar (o pipeline grava CSVs e gráficos lá).
-- Endpoints externos:
-  - IBGE/SIDRA INPC: https://api.sidra.ibge.gov.br
-  - FipeZAP (Excel): https://downloads.fipe.org.br/indices/fipezap/fipezap-serieshistoricas.xlsx
+- A aba e os nomes/posições das colunas do FipeZAP podem mudar ao longo do tempo.
+  - Hoje o código aponta para a aba “Índice FipeZAP”.
+  - Em limpeza.py, são usadas as colunas B e R (renomeadas para mes e preco_medio).
+  - Se o mês estiver na coluna A, ajuste para A e R (ou use usecols="A,R" no pd.read_excel).
+- As séries do FipeZAP representam preços médios anunciados em R$/m². Elas podem refletir médias móveis trimestrais (ver notas no rodapé da planilha).
 - Reexecuções sobrescrevem arquivos em “data/”.
-- Os rótulos de “mes” vêm das fontes; para eixos mais legíveis, considere converter para datetime.
+- Para eixos mais legíveis, considere converter “mes” para datetime no primeiro dia do mês.
 
 ## Tecnologias
 - Python, pandas, seaborn, matplotlib

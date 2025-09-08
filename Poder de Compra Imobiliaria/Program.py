@@ -1,4 +1,4 @@
-#pipeline principal
+Ôªø#pipeline principal
 import scripts.coleta as coleta
 import scripts.limpeza as limpeza
 import scripts.modelos as modelos
@@ -11,16 +11,16 @@ def main():
     # 1. Coleta de dados
     df_inpc, df_imoveis = coleta.baixar_dados()
 
-    # 2. Limpeza e prÈ-processamento
+    # 2. Limpeza e pr√©-processamento
     df = limpeza.preprocessar(df_inpc, df_imoveis)
 
-    # 3. VisualizaÁ„o exploratÛria
+    # 3. Visualiza√ß√£o explorat√≥ria
     visualizacao.plotar_graficos(df)
 
-    # 4. Machine Learning (regress„o, classificaÁ„o, clustering)
+    # 4. Machine Learning (regress√£o, classifica√ß√£o, clustering)
     resultados = modelos.treinar_modelos(df)
 
-    # 5. RelatÛrio final (gr·ficos + mÈtricas)
+    # 5. Relat√≥rio final (gr√°ficos + m√©tricas)
     relatorio.gerar_relatorio(df, resultados)
 
     print(" Pipeline finalizado com sucesso!")

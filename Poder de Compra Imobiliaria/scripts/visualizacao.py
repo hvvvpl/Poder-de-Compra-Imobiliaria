@@ -1,34 +1,34 @@
-# seaborn / matploitlib
+Ôªø# seaborn / matploitlib
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 
 
 def plotar_graficos(df):
-    # EvoluÁ„o do INPC
+    # Evolu√ß√£o do INPC
     plt.figure(figsize=(10,5))
     sns.lineplot(x="mes", y="inpc", data=df)
-    plt.title("EvoluÁ„o do INPC")
+    plt.title("Evolu√ß√£o do INPC")
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig("data/grafico_inpc.png")
     plt.close()
 
-    # EvoluÁ„o do preÁo mÈdio de imÛveis
+    # Evolu√ß√£o do pre√ßo m√©dio de im√≥veis
     plt.figure(figsize=(10,5))
     sns.lineplot(x="mes", y="preco_medio", data=df)
-    plt.title("EvoluÁ„o do PreÁo MÈdio de ImÛveis (Brasil)")
+    plt.title("Evolu√ß√£o do Pre√ßo M√©dio de Im√≥veis (Brasil)")
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.savefig("data/grafico_imoveis.png")
     plt.close()
 
-    # RelaÁ„o INPC x PreÁo mÈdio
+    # Rela√ß√£o INPC x Pre√ßo m√©dio
     plt.figure(figsize=(6,6))
     sns.scatterplot(x="inpc", y="preco_medio", data=df)
-    plt.title("RelaÁ„o INPC x PreÁo MÈdio de ImÛveis")
+    plt.title("Rela√ß√£o INPC x Pre√ßo M√©dio de Im√≥veis")
     plt.tight_layout()
     plt.savefig("data/grafico_relacao.png")
     plt.close()
 
-    print(" Gr·ficos salvos.")
+    print(" Gr√°ficos salvos.")

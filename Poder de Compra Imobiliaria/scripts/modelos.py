@@ -1,4 +1,4 @@
-# machile learning (regress„o, classificaÁ„o, clustering)
+Ôªø# machile learning (regress√£o, classifica√ß√£o, clustering)
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
@@ -8,7 +8,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 def treinar_modelos(df):
     resultados = {}
 
-    # Exemplo: prever preÁo de imÛvel a partir do INPC
+    # Exemplo: prever pre√ßo de im√≥vel a partir do INPC
     X = df[["inpc"]]
     y = df["preco_medio"]
 
@@ -20,5 +20,6 @@ def treinar_modelos(df):
     resultados["regressao_rmse"] = mean_squared_error(y_test, y_pred, squared=False)
     resultados["regressao_r2"] = r2_score(y_test, y_pred)
 
-    print(" Modelo de regress„o treinado e avaliado.")
+    print(" Modelo de regress√£o treinado e avaliado.")
     return resultados
+
