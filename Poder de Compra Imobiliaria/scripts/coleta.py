@@ -22,6 +22,7 @@ def baixar_dados():
     print(" Preços de imóveis carregados do FipeZAP.")
 
     # Salvar arquivos crus na pasta data
+
     dfInpc.to_csv("data/inpc_raw.csv", index=False)
     dfPrecoImoveis.to_csv("data/imoveis_raw.csv", index=False)
 
