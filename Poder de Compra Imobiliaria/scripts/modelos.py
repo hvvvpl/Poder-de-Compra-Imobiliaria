@@ -8,7 +8,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 def treinar_modelos(df):
     resultados = {}
 
-    # Exemplo: prever preço de imóvel a partir do INPC
+    # prever preço de imóvel a partir do INPC
     X = df[["inpc"]]
     y = df["preco_medio"]
 
